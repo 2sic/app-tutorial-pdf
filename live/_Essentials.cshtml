@@ -1,0 +1,23 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+
+@{
+  var appPath = App.Path;
+}
+
+<div class="mb-2">
+  <div>
+    Each view relies on _Layout.cshtml. It is built with tables, which allow the repetition of header and footer spacing when printing.
+  </div>
+  <img class="mb-2" style="max-width: 100%; width: 600px;" src="@appPath/assets/Layout csthml Table.png">
+
+  <div>
+    This App contains a ready to use document print setup. You can write content and assign background images, header and footer texts as layouts.
+  </div>
+  <div>
+    The layout is configurable by the following fields:
+  </div>
+  <img class="mb-2" style="max-width: 100%; width: 300px;" src="@appPath/assets/Layout Fields.png">
+</div>
+

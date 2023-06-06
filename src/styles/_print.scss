@@ -1,0 +1,117 @@
+@page { size: auto; margin: 0; }
+
+body.is-print-view {
+  margin-left: 0 !important;
+  @media print {
+    // Remove DNN elements
+    .personalBarContainer, .dnnFormInfo, .sc-menu, .sc-content-block-menu {
+      display: none !important;
+    }
+  }
+}
+
+.app-print {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .print-layout {
+    width: 100%;  
+
+    .header, .header-space,
+    .footer, .footer-space {
+      height: 29.4mm;
+    }
+
+    .header, .footer {
+      position: fixed;
+      top: 0;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      
+      .content-inner  {
+        width: 64%;
+      }
+
+      .content-full {
+        margin: -12.3mm 0;
+        width: 76.4%;
+      }
+    }
+  }
+
+  .print-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    width: 76.4%;
+    top: 5.9mm;
+    z-index: 10;
+  }
+
+  .document-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: fixed;
+    width: 76.4%;
+    z-index: 10;
+    
+    &.top {
+      top: 5.9mm;
+    }
+    
+    &.bottom {
+      bottom: 5.9mm;
+    }
+
+    .content-left, .content-right {
+      font-weight: 300;
+      font-size: 8pt;
+      align-self: center;
+      width: 30%;
+    }
+
+    .content-left {
+      text-align: right;
+    }
+
+    &.space-between {
+      justify-content: space-between;
+
+      .content-left {
+        text-align: left;
+      }
+
+      .content-right {
+        text-align: right;
+      }
+    }
+  }
+
+  .background-image {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    max-width: 100vh;
+  }
+
+  .pdf-document {
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+
+    ol, li, p, h2, h3, h4, h5 {
+      font-size: 14px;
+      padding-left: 0;
+      font-weight: 300 !important;
+    }
+  }
+}

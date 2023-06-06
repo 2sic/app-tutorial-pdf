@@ -1,0 +1,118 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+@{
+  var appPath = App.Path;
+}
+
+<h4>Example 2: Extend Document with custom token inputs</h4>
+<div class="mb-2">To help you understand the app, we will go through the steps on how to create the token-data generator.</div>
+<div class="mb-2">
+  <div>The current document Content Type contains the followin fields:</div>
+  <img style="max-width: 100%; width: 500px;" src="@appPath/assets/Document Fields.png">
+</div>
+<ol>
+  <li>Create a new 2sxc Content Type</li>
+  <div>
+    <div>Our new Content-Type will accept the document type in the entity picker. You will be able to define your own token values, which will be replaced in the document.</div>
+    <img style="max-width: 100%;" src="@appPath/assets/TokenDataEntity.png">
+  </div>
+  <li>Create a page for the generator, following the recommendations from Example 1.</li>
+  <li>Create the view for pdf generation</li>
+  <li>Configure a TokenData query to retrieve data</li>
+  <div>This was done using a simple value filter, which is matching entities by id.</div>
+  <li>Implement a service to process tokens and retrieve the filename for the controller</li>
+  <div>We retrieve and replace tokens using regex:</div>
+  <pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+    <code>
+public string GetTokenValue(string text, string token) {
+  var regex = new Regex(@@"(?<=\[" + token + @@"]=).*?(?=\[.*|$)");
+  return regex.Match(text.Replace("\n", "")).Value; 
+}
+
+public string[] GetTokens(string text) {
+  var regex = new Regex(@@"(?<=\[).*?(?=\]=|$)");
+  return regex.Matches(text)
+    .Cast<Match>()
+    .Select(m => m.Value)
+    .ToArray();
+}
+
+public string GetTokenizedContent(string tokenData, string content) {
+  var tokens = GetTokens(tokenData);
+
+  var tokenizedContent = content;
+
+  // replace tokens in body with placeholder tokens
+  foreach(string token in tokens) {
+    var tokenValue = GetTokenValue(tokenData, token);
+    tokenValue = Kit.Scrub.All(tokenValue);
+    tokenizedContent = tokenizedContent.Replace("[" + token + "]", tokenValue);
+  }
+
+  return tokenizedContent; 
+}
+    </code>
+  </pre>
+  <li>In the view we process the content with GetTokenizedContent</li>
+  <pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+    <code>
+@@{
+  var documentContent = tokenDataDocumentService.GetTokenizedContent(Content.Tokens, Content.TemplateDocument.Content);
+}
+<div>
+  @@Html.Partial("./Print/Layout/_Layout.cshtml", new { 
+    Content = documentContent, 
+    Layout = Content.TemplateDocument.Layout, 
+  })
+  @@Html.Partial("./shared/_PagePrintView.cshtml")
+</div>
+    </code>
+  </pre>
+  <li>Create the controller for pdf retrieval</li>
+  <div>In the controller we perform some basic validation and create the print-url, which the pdfgenerator will navigate to when printing. Here we're attaching a print token to the url. This helps us prevent unauthorized access, this token will be verified int the view.</div>
+  <pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+    <code>
+// Example: You can also use the document as a template and automatically replace tokens with values
+[HttpGet]
+public async Task<dynamic> TokenDataDocument(int tokenDataId)
+{
+  // Check authorization here if data integrity is required
+
+  // Modify print url if your page uses multiple cultures: CmsContext.Site.Url + "/" + cultureCode + ...
+  var cultureCode = CmsContext.Culture.CurrentCode.Substring(0, 2);
+  var printUrl = CmsContext.Site.Url + generatorUrlPrefix + "/token-data?" + "id=" + tokenDataId + "&token=" + printToken;
+
+  var pdfConverter = CreateInstance("../Services/PdfService.cs");
+  byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(printUrl);
+
+  var tokenDataDocumentService = CreateInstance("../Services/TokenDataDocumentService.cs");
+  var documentName = tokenDataDocumentService.GetTokenDataDocumentName(tokenDataId);
+
+  HttpContext.Current.Response.ContentType = "application/pdf";
+  HttpContext.Current.Response.AddHeader("Content-Disposition", "filename=" + documentName + ".pdf");
+  HttpContext.Current.Response.BinaryWrite(pdfStream);
+  HttpContext.Current.Response.End();
+
+  return pdfStream;
+}
+    </code>
+  </pre>
+<div>
+
+</div>
+  <li>Verify authorization in view</li>
+  <div>We only want to allow admins and the puppeteer crawler</div>
+<pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+  <code>
+var isAuthorized = CmsContext.User.IsSiteAdmin || printToken == "vMmrEXtRjKWE9G3GTnO0";
+@@if (!isAuthorized) {
+  <div>Unauthorized</div>
+  return;
+}
+  </code>
+</pre>
+  <div>With that we can return a template document with dynamic tokenized values and even add backgrounds through the layout configuration.</div>
+  <a href="@DynamicModel.ExampleCertificate" target="_blank">Custom certificate</a>
+</ol>
+

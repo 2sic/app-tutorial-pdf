@@ -1,0 +1,32 @@
+{
+  "name": "app-print",
+  "version": "1.0.0",
+  "description": "A document print app for 2sxc",
+  "main": "(none)",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "2sic internet solutions",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "mini-css-extract-plugin": "^2.7.6",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^7.3.2",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.3.1",
+    "slidetoggle": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.9",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.1.3",
+    "webpack": "^5.85.1",
+    "webpack-cli": "^5.1.3",
+    "webpackbar": "^5.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  }
+}

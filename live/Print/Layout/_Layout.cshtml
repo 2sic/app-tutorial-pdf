@@ -1,0 +1,55 @@
+@inherits Custom.Hybrid.Razor14
+@using System
+@{
+  var documentContent = DynamicModel.Content;
+  var viewPath = DynamicModel.ViewPath;
+  var layout = DynamicModel.Layout;
+}
+
+<div class="app-print">
+  <table class="print-layout">
+    <thead><tr><td><div class="header-space">&nbsp;</div></td></tr></thead>
+    <tbody><tr><td>
+      <div class="content">
+        <div class='content-full'>
+          <div class="pdf-document">
+            @if (documentContent != null) {
+              @Html.Raw(documentContent)
+            } else if (viewPath != null) {
+              @Html.Partial(viewPath)
+            }
+          </div>
+        </div>
+      </div>
+      @if (layout != null && layout.ShowBackground == true && layout.BackgroundImage != null) {
+        @Html.Partial("_Background.cshtml", 
+          new { 
+            BackgroundImage = layout.BackgroundImage, 
+            ShowBackground = layout.ShowBackground 
+          }
+        )
+      }
+    </td></tr></tbody>
+    <tfoot><tr><td><div class="footer-space">&nbsp;</div></td></tr></tfoot>
+  </table>
+  
+  @if (layout != null && layout.ShowHeader ?? false) {
+    @Html.Partial("./_DocumentSection.cshtml", 
+      new {
+        Type = "top",
+        TextLeft = layout.HeaderTextLeft,
+        TextCenter = layout.HeaderTextCenter,
+        TextRight = layout.HeaderTextRight
+      })
+  }
+
+  @if (layout != null && layout.ShowFooter ?? false) {
+    @Html.Partial("./_DocumentSection.cshtml", 
+      new {
+        Type = "bottom",
+        TextLeft = layout.FooterTextLeft,
+        TextCenter = layout.FooterTextCenter,
+        TextRight = layout.FooterTextRight
+      })
+  }
+</div>
