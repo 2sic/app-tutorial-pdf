@@ -1,0 +1,29 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+@{
+  var appPath = App.Path;
+  var exampleDocument = DynamicModel.ExampleDocument;
+  var exampleViewPrint = DynamicModel.ExampleViewPrint;
+  var exampleCertificate = DynamicModel.ExampleCertificate;
+}
+
+<div class="mb-4">
+  <h4 class="mb-2">How it works:</h4>
+  <img src="@appPath/assets/AppStructure.png">
+</div>
+
+@Html.Partial("_Essentials.cshtml")
+
+<div class="mb-4">
+  <h4 class="mb-2">Import into your app:</h4>
+  <div>If you want to use the print function in your app, we recommend importing the:</div>
+  <ol>
+    <li>live/Services/PdfService.cs</li>
+    <li>live/Print/Layout</li>
+    <li>src/styles/_print.scss</li>
+  </ol>
+</div>
+
+@Html.Partial("_Example-View-Print.cshtml", new { ExampleViewPrint = exampleViewPrint })
+@Html.Partial("_Example-Tokenized-Document.cshtml", new { ExampleCertificate = exampleCertificate })

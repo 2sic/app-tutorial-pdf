@@ -1,0 +1,32 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+
+@{
+  var printToken = CmsContext.Page.Parameters["token"];
+  var pdfService = CreateInstance("./Services/PdfService.cs");
+
+  var tokenDataDocumentService = CreateInstance("./Services/TokenDataDocumentService.cs");
+  var isAuthorized = CmsContext.User.IsSiteAdmin || printToken == pdfService.GetToken();
+}
+
+@if (!isAuthorized) {
+  <div>Unauthorized</div>
+  return;
+}
+
+@if (Content == null) {
+  <div>Content not found</div>
+  return;
+}
+
+@{
+  var documentContent = tokenDataDocumentService.GetTokenizedContent(Content.Tokens, Content.TemplateDocument.Content);
+}
+<div>
+  @Html.Partial("./Print/Layout/_Layout.cshtml", new { 
+    Content = documentContent, 
+    Layout = Content.TemplateDocument.Layout, 
+  })
+  @Html.Partial("./shared/_PagePrintView.cshtml")
+</div>

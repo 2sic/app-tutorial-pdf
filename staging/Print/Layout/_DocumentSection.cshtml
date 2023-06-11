@@ -1,0 +1,11 @@
+@inherits Custom.Hybrid.Razor14
+
+<div class='document-section space-between @(DynamicModel.Type.ToLower())'>
+  <div class="content-left">
+    @DynamicModel.TextLeft
+  </div>
+  <div>@DynamicModel.TextCenter</div>
+  <div class="content-right">
+    @DynamicModel.TextRight
+  </div>
+</div>

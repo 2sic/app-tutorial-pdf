@@ -1,0 +1,55 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+
+<h4>Example 1: Print a view</h4>
+<div>Printing a view is easy and can be done in a few steps</div>
+<ol class="mb-4">
+  <li>Create a new page for the generator (we recommend the /pdf/generator/[name] directory structure)</li>
+  <li>In the Page/Advanced/Appearance menu - apply the App-Print-Skin</li>
+  <li>In the Page/Permissions - make sure that it's accessible by all users</li>
+  <li>Create a view in your app with a Html.Partial, that passes the ViewPath. Layout.cshtml will allow you to add additional headers, footers and spacing to your view.</li>
+  <div>
+    <pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+      <code>
+@@Html.Partial("./Print/Layout/_Layout.cshtml", new { 
+  ViewPath = "../../_Main-Tutorial.cshtml",
+  Layout = new {
+    ShowHeader = true,
+    HeaderTextRight = "Made with 2sxc"
+  }
+})
+      </code>
+    </pre>
+  </div>
+  <li>Add the App-View to the new pdf generator page</li>
+  <li>Add a controller method to /live/api/PdfController.cs, that prints the view from by generator url:</li>
+  <div>
+    <pre style="background-color: whitesmoke; border-radius: 0.5rem; padding: 0.5rem;">
+      <code>
+// Print the tutorial page 
+[HttpGet]
+public async Task<dynamic> TutorialPage()
+{
+  // Modify print url if your page uses multiple cultures: CmsContext.Site.Url + "/" + cultureCode + ...
+  var cultureCode = CmsContext.Culture.CurrentCode.Substring(0, 2);
+  var printUrl = CmsContext.Site.Url + generatorUrlPrefix + "/tutorial-page";
+
+  var pdfConverter = CreateInstance("../Services/PdfService.cs");
+  byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(printUrl);
+
+  var documentName = "Tutorial-Page";
+
+  HttpContext.Current.Response.ContentType = "application/pdf";
+  HttpContext.Current.Response.AddHeader("Content-Disposition", "filename=" + documentName + ".pdf");
+  HttpContext.Current.Response.BinaryWrite(pdfStream);
+  HttpContext.Current.Response.End();
+
+  return pdfStream;
+}
+      </code>
+    </pre>
+    <div>With that we can return our view as a PDF without visible DNN components.</div>
+    <a href="@DynamicModel.ExampleViewPrint" target="_blank">@DynamicModel.ExampleViewPrint</a>
+  </div>
+</ol>

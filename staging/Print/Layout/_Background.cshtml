@@ -1,0 +1,10 @@
+@inherits Custom.Hybrid.Razor14
+
+@{
+  var showBackground = DynamicModel.ShowBackground;
+  var backgroundImage = DynamicModel.BackgroundImage;
+}
+
+@if (showBackground) {
+  <img class="background-image" src="@backgroundImage">
+}
