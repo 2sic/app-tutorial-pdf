@@ -18,7 +18,6 @@ using System.Web;
 public class PdfController : Custom.Hybrid.Api14
 {
   // Token is verified in pdf pages to prevent unwanted user access
-  public static string printToken = "vMmrEXtRjKWE9G3GTnO0";
   public static string generatorUrlPrefix = "/pdf/generator";
 
   // Print any page url
@@ -29,8 +28,8 @@ public class PdfController : Custom.Hybrid.Api14
       return "";
     }
 
-    var pdfConverter = CreateInstance("../Services/PdfService.cs");
-    byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(url);
+    var pdfService = CreateInstance("../Services/PdfService.cs");
+    byte[] pdfStream = await pdfService.GetWebPageAsPdf(url);
 
     HttpContext.Current.Response.ContentType = "application/pdf";
     HttpContext.Current.Response.AddHeader("Content-Disposition", "filename=" + url + ".pdf");
@@ -48,11 +47,11 @@ public class PdfController : Custom.Hybrid.Api14
 
     // Modify print url if your page uses multiple cultures: CmsContext.Site.Url + "/" + cultureCode + ...
     var cultureCode = CmsContext.Culture.CurrentCode.Substring(0, 2);
-    var printUrl = CmsContext.Site.Url + generatorUrlPrefix + "/document?" + "id=" + documentId + "&token=" + printToken;
 
-    var pdfConverter = CreateInstance("../Services/PdfService.cs");
-    byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(printUrl);
+    var pdfService = CreateInstance("../Services/PdfService.cs");
+    var printUrl = pdfService.AddPrintToken(CmsContext.Site.Url + generatorUrlPrefix + "/document?" + "id=" + documentId);
 
+    byte[] pdfStream = await pdfService.GetWebPageAsPdf(printUrl);
     var documentService = CreateInstance("../Services/DocumentService.cs");
     var documentName = documentService.GetDocumentName(documentId);
 
@@ -73,11 +72,10 @@ public class PdfController : Custom.Hybrid.Api14
 
     // Modify print url if your page uses multiple cultures: CmsContext.Site.Url + "/" + cultureCode + ...
     var cultureCode = CmsContext.Culture.CurrentCode.Substring(0, 2);
-    var printUrl = CmsContext.Site.Url + generatorUrlPrefix + "/token-data?" + "id=" + tokenDataId + "&token=" + printToken;
+    var pdfService = CreateInstance("../Services/PdfService.cs");
+    var printUrl = pdfService.AddPrintToken(CmsContext.Site.Url + generatorUrlPrefix + "/token-data?" + "id=" + tokenDataId);
 
-    var pdfConverter = CreateInstance("../Services/PdfService.cs");
-    byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(printUrl);
-
+    byte[] pdfStream = await pdfService.GetWebPageAsPdf(printUrl);
     var tokenDataDocumentService = CreateInstance("../Services/TokenDataDocumentService.cs");
     var documentName = tokenDataDocumentService.GetTokenDataDocumentName(tokenDataId);
 
@@ -95,11 +93,10 @@ public class PdfController : Custom.Hybrid.Api14
   {
     // Modify print url if your page uses multiple cultures: CmsContext.Site.Url + "/" + cultureCode + ...
     var cultureCode = CmsContext.Culture.CurrentCode.Substring(0, 2);
-    var printUrl = CmsContext.Site.Url + generatorUrlPrefix + "/tutorial";
+    var pdfService = CreateInstance("../Services/PdfService.cs");
+    var printUrl = pdfService.AddPrintToken(CmsContext.Site.Url + generatorUrlPrefix + "/tutorial");
 
-    var pdfConverter = CreateInstance("../Services/PdfService.cs");
-    byte[] pdfStream = await pdfConverter.GetWebPageAsPdf(printUrl);
-
+    byte[] pdfStream = await pdfService.GetWebPageAsPdf(printUrl);
     var documentName = "Tutorial-Page";
 
     HttpContext.Current.Response.ContentType = "application/pdf";

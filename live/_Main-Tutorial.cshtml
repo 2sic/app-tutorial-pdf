@@ -3,8 +3,14 @@
 @using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
 
 @{
-  var exampleDocumentId = AsList(App.Data["Document"]).Where(doc => doc.TutorialId == "about-donald-knuth").First();
-  var certificateDocumentId = AsList(App.Data["TokenData"]).Where(doc => doc.TutorialId == "volunteer-certificate-max-muster").First();
+  var appPath = App.Path;
+  var printToken = CmsContext.Page.Parameters["token"];
+
+  var pdfService = CreateInstance("./Services/PdfService.cs");
+  var isAuthorized = CmsContext.User.IsSiteAdmin || printToken == pdfService.GetToken();
+
+  var exampleDocument = AsList(App.Data["Document"]).Where(doc => doc.TutorialId == "about-donald-knuth").First();
+  var certificateDocument = AsList(App.Data["TokenData"]).Where(doc => doc.TutorialId == "volunteer-certificate-max-muster").First();
 
   var showIncludeBinaryWarning = false;
   try {
@@ -15,19 +21,22 @@
   }
 
   var exampleSite = "https://2sxc.org/en";
-  var exampleSitePrint = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/Page?url=" + exampleSite;
-  var exampleDocument = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/Document?documentId="+exampleDocumentId.EntityId;
-  var exampleCertificate = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/TokenDataDocument?tokenDataId=" + certificateDocumentId.EntityId;
-  var exampleViewPrint = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/TutorialPage";
+  var exampleSitePrintUrl = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/Page?url=" + exampleSite;
+  var exampleDocumentUrl = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/Document?documentId=" + exampleDocument.EntityId;
+  var exampleCertificateUrl = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/TokenDataDocument?tokenDataId=" + certificateDocument.EntityId;
+  var exampleViewPrintUrl = CmsContext.Site.Url + "/api/2sxc/app/Print/live/api/Pdf/TutorialPage";
+}
 
-  var appPath = App.Path;
+@if (!isAuthorized) {
+  <div></div>
+  return;
 }
 
 <div @Edit.TagToolbar(Content) class="bg-light p-4 rounded-2" style="max-width: 750px;">
   <div class="alert alert-primary">
-    Tutorial-Pdf App
+    Tutorial-Pdf App: Visible to Admin only
   </div>
-
+   
   @if (showIncludeBinaryWarning) {
     <div class="alert alert-warning">
       <div>
@@ -39,16 +48,7 @@
       </div>
     </div>
   }
-  <div class="mb-4">
-    After installing the app make sure to:
-    <ol>
-      <li><strong>Include Puppeteer binaries</strong> from /App-Print/Setup_Files/Puppeteer_Binaries in the "/bin" directory of your project root.</li>
-      <li><strong>Add the Print-App Skin</strong> from from /App-Print/Setup_Files/Print_Skin to the "/Portals/_default/Skins" directory.</li>
-      <li><strong>Create the generator pages</strong>, add the according app views and apply the print skin 
-        <div class="pt-2"><img src="@appPath/assets/GeneratorStructure.png"></div>
-      </li>
-    </ol>
-  </div>
+
   <h4>
     With this app you can
   </h4>
@@ -56,40 +56,71 @@
     <div>❕The first download will take longer, as we need to install chrome for Puppeteer.</div>
     <li class="mb-2">
       <div>Print any webpage:</div>
-      <a href="@exampleSitePrint" target="_blank">@exampleSite</a>
+      <a href="@exampleSitePrintUrl" target="_blank">@exampleSite</a>
     </li>
     <li class="mb-2">
       <div>Print your views:</div> 
-      <a href="@exampleViewPrint" target="_blank">@exampleViewPrint</a>
+      <a href="@exampleViewPrintUrl" target="_blank">@exampleViewPrintUrl</a>
     </li>
     <li class="mb-2">
       <div>Print professional documents:</div>
-      <a href="@exampleDocument" target="_blank">@exampleDocument</a>
+      <a href="@exampleDocumentUrl" target="_blank">@exampleDocumentUrl</a>
     </li>
     <li class="mb-2">
       <div>Make tokenized certificates with backgrounds:</div> 
-      <a href="@exampleCertificate" target="_blank">@exampleCertificate</a>
+      <a href="@exampleCertificateUrl" target="_blank">@exampleCertificateUrl</a>
     </li>
   </ul>
-  <div class="mb-4">
-    <h4 class="mb-2">How it works:</h4>
-    <img src="@appPath/assets/AppStructure.png">
+  
+  <div class="border-bottom padding-bottom">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <button type="button" class="btn btn-primary" data-sxc-tutorial-setup-button="@CmsContext.View.Id">Setup Guide</button>
+      <button type="button" class="btn btn-dark" data-sxc-tutorial-implementation-button="@CmsContext.View.Id">Implementation Guide</button>
+    </div>
   </div>
-
-  @Html.Partial("_Essentials.cshtml")
-
-  <div class="mb-4">
-    <h4 class="mb-2">Import into your app:</h4>
-    <div>If you want to use the print function in your app, we recommend importing the:</div>
-    <ol>
-      <li>live/Services/PdfService.cs</li>
-      <li>live/Print/Layout</li>
-      <li>src/styles/_print.scss</li>
-    </ol>
+  <div class="pt-4" data-sxc-tutorial-setup="@CmsContext.View.Id">
+    @Html.Partial("_Setup-Guide.cshtml", new { ExampleDocument = exampleDocumentUrl })
   </div>
-
-  @Html.Partial("_Example-View-Print.cshtml", new { ExampleViewPrint = exampleViewPrint })
-  @Html.Partial("_Example-Tokenized-Document.cshtml", new { ExampleCertificate = exampleCertificate })
+  <div class="pt-4 d-none" data-sxc-tutorial-implementation="@CmsContext.View.Id">
+    @Html.Partial("_Implementation-Guide.cshtml", new { ExampleDocument = exampleDocumentUrl, ExampleCertificate = exampleCertificateUrl, ExampleViewPrint = exampleViewPrintUrl })
+  </div>
 </div>
+
+<script>
+  const setupWrapperButton = document.querySelector("[data-sxc-tutorial-setup-button='@CmsContext.View.Id']")
+  const implementationWrapperButton = document.querySelector("[data-sxc-tutorial-implementation-button='@CmsContext.View.Id']")
+  const setupWrapper = document.querySelector("[data-sxc-tutorial-setup='@CmsContext.View.Id']")
+  const implementationWrapper = document.querySelector("[data-sxc-tutorial-implementation='@CmsContext.View.Id']")
+
+  setupWrapperButton.addEventListener("click", (e) => {
+    if (!implementationWrapper.classList.contains("d-none"))
+      implementationWrapper.classList.toggle("d-none");
+
+    setupWrapper.classList.remove("d-none");
+
+    implementationWrapperButton.classList.remove("btn-primary")
+    if (!implementationWrapperButton.classList.contains("btn-dark"))
+      implementationWrapperButton.classList.add("btn-dark")
+
+    setupWrapperButton.classList.remove("btn-dark")
+    if (!setupWrapperButton.classList.contains("btn-primary"))
+      setupWrapperButton.classList.add("btn-primary")
+  });
+
+  implementationWrapperButton.addEventListener("click", (e) => {
+    if (!setupWrapper.classList.contains("d-none"))
+      setupWrapper.classList.toggle("d-none");
+
+    implementationWrapper.classList.remove("d-none");
+
+    setupWrapperButton.classList.remove("btn-primary")
+    if (!setupWrapperButton.classList.contains("btn-dark"))
+      setupWrapperButton.classList.add("btn-dark")
+
+    implementationWrapperButton.classList.remove("btn-dark")
+    if (!implementationWrapperButton.classList.contains("btn-primary"))
+      implementationWrapperButton.classList.add("btn-primary")
+  });
+</script>
 
 @Html.Partial("./shared/_PagePrintView.cshtml")

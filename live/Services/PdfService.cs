@@ -15,6 +15,8 @@ public class PdfService : Custom.Hybrid.Code14
 
   // ADJUST With folder name after browser has been downloaded from /Pdf/chrome-win/{chromeVersionName}
   public const string chromeVersionName = "Win64-884014";
+  public const string printToken = "vMmrEXtRjKWE9G3GTnO0";
+
   public async Task<byte[]> GetWebPageAsPdf(string url)
   {
     // Fetches chrome browser, when required
@@ -160,6 +162,21 @@ public class PdfService : Custom.Hybrid.Code14
   public string GetProcessLocation()
   {
     return GetAppPdfFolderName() + "/process.json";
+  }
+
+  public string GetToken()
+  {
+    return printToken;
+  }
+
+  public string AddPrintToken(string url)
+  {
+    var uriBuilder = new UriBuilder(url);
+    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+    query["token"] = printToken;
+    uriBuilder.Query = query.ToString();
+
+    return uriBuilder.Uri.ToString();;
   }
 }
 

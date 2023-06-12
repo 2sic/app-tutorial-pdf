@@ -1,0 +1,43 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+@{
+  var appPath = App.Path;
+  var exampleDocument = DynamicModel.ExampleDocument;
+}
+<div class="mb-4">
+  You can find the setup files in your 2sxc-App root (Make sure to unzip the files before copying them 😏):
+  <div class="mb-4" style="max-width: 100%">
+    <img src="@appPath/assets/Setup Files.png">
+  </div>
+
+  After installing the app make sure to:
+  <ol>
+    <li><strong>Copy Puppeteer binaries</strong> from /App-Print/Setup_Files/Puppeteer_Binaries to the "/bin" directory of your DNN project root. (Try refreshing to make sure the Puppeteer warning is gone.)</li>
+    <li><strong>Copy the Print-App Skin</strong> from /App-Print/Setup_Files/Print_Skin to the "/Portals/_default/Skins" of your DNN project directory.</li>
+    <li><strong>Create the generator pages</strong>, add the according app views ("Generator: Document", "Generator: Main Tutorial", "Generator: TokenDataDocument") and apply the App-Print-Skin in Advanced/Appearance 
+      <div class="pt-2">
+        <img style="max-width: 100%;" src="@appPath/assets/GeneratorStructure.png">
+      </div>
+    </li>
+    <li><strong>Configure Layout</strong>: You can configure, how your document will look like by adding a page layout.
+      <div class="pt-2">
+        <img style="max-width: 100%; width: 500px;" src="@appPath/assets/PageLayoutConfig.png">
+      </div>
+    </li>
+    <li><strong>Create Document</strong>: Create your first document.
+      <div class="pt-2">
+        <img style="max-width: 100%; width: 500px;" src="@appPath/assets/DocumentConfig.png">
+      </div>
+    </li>
+    <li>
+      <strong>Print Document</strong>: To print the document, you need to locate it's ID from the 2sxc data first.
+      <div class="pt-2">
+        <img style="max-width: 100%; width: 500px;" src="@appPath/assets/IdLocation.png">
+        <div>Simply add the id as queryparameter to the API and print it:</div>
+        <a href="@exampleDocument" target="_blank">@exampleDocument</a>
+      </div>
+    </li>
+
+  </ol>
+</div>  

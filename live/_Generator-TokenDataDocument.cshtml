@@ -4,9 +4,10 @@
 
 @{
   var printToken = CmsContext.Page.Parameters["token"];
+  var pdfService = CreateInstance("./Services/PdfService.cs");
 
   var tokenDataDocumentService = CreateInstance("./Services/TokenDataDocumentService.cs");
-  var isAuthorized = CmsContext.User.IsSiteAdmin || printToken == "vMmrEXtRjKWE9G3GTnO0";
+  var isAuthorized = CmsContext.User.IsSiteAdmin || printToken == pdfService.GetToken();
 }
 
 @if (!isAuthorized) {
