@@ -19,6 +19,10 @@ A standard blog app to use with 2sxc
 
 ---
 
+# Tutorial
+Learn how to print and create custom PDF documents with 2sxc.
+You will find the tutorial in the "Main Tutorial" view after downloading and installing the app. 
+
 ## History
 
 ### V1 2023-05

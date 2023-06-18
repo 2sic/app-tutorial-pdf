@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<SexyContent FileVersion="07.00.00" MinimumRequiredVersion="07.04.02" ModuleVersion="16.02.00" ExportDate="2023-06-06T17:00:07.4794841+02:00">
+<SexyContent FileVersion="07.00.00" MinimumRequiredVersion="07.04.02" ModuleVersion="16.02.00" ExportDate="2023-06-12T01:53:20.0758998+02:00">
   <Header>
     <App Guid="b2c58554-124e-4099-9586-d9311e2078b5" />
     <Language Default="en-us" />
@@ -51,6 +51,34 @@
             <Value Key="EnableRemove" Value="True" Type="Boolean" />
             <Value Key="EntityType" Value="PageLayout" Type="String" />
             <Value Key="Prefill" Value="" Type="String" />
+          </Entity>
+        </Attribute>
+        <Attribute StaticName="Advanced" Type="Empty" IsTitle="false">
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@All" AttributeSetName="@All" EntityGUID="d8d56718-22e3-4a0a-abe9-3386ce972950" Json="True" KeyNumber="5787">
+            <Value Key="CustomJavaScript" Value="" Type="String" />
+            <Value Key="DefaultValue" Value="" Type="String" />
+            <Value Key="Disabled" Value="False" Type="Boolean" />
+            <Value Key="DisableTranslation" Value="False" Type="Boolean" />
+            <Value Key="HelpLink" Value="" Type="Hyperlink" />
+            <Value Key="Information" Value="" Type="String" />
+            <Value Key="InputType" Value="empty-default" Type="String" />
+            <Value Key="Name" Value="Advanced" Type="String" />
+            <Value Key="Notes" Value="" Type="String" />
+            <Value Key="Placeholder" Value="" Type="String" />
+            <Value Key="Required" Value="False" Type="Boolean" />
+            <Value Key="Tooltip" Value="" Type="String" />
+            <Value Key="ValidationRegExJavaScript" Value="" Type="String" />
+            <Value Key="VisibleInEditUI" Value="True" Type="Boolean" />
+          </Entity>
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@empty-default" AttributeSetName="@empty-default" EntityGUID="b83c8917-ccbb-4330-ad33-9d49784b4fdb" Json="True" KeyNumber="5787">
+            <Value Key="DefaultCollapsed" Value="True" Type="Boolean" />
+          </Entity>
+        </Attribute>
+        <Attribute StaticName="TutorialId" Type="String" IsTitle="false">
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@All" AttributeSetName="@All" EntityGUID="90b42227-b333-4528-af2e-c39178fea839" Json="True" KeyNumber="5788">
+            <Value Key="InputType" Value="string-default" Type="String" />
+            <Value Key="Name" Value="TutorialId" Type="String" />
+            <Value Key="VisibleInEditUI" Value="True" Type="Boolean" />
           </Entity>
         </Attribute>
       </Attributes>
@@ -341,6 +369,34 @@
             <Value Key="InlineInitialHeight" Value="" Type="String" />
           </Entity>
         </Attribute>
+        <Attribute StaticName="Advanced" Type="Empty" IsTitle="false">
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@All" AttributeSetName="@All" EntityGUID="84fb2b94-90e0-4bc4-882e-5d5e49f3bebc" Json="True" KeyNumber="5789">
+            <Value Key="CustomJavaScript" Value="" Type="String" />
+            <Value Key="DefaultValue" Value="" Type="String" />
+            <Value Key="Disabled" Value="False" Type="Boolean" />
+            <Value Key="DisableTranslation" Value="False" Type="Boolean" />
+            <Value Key="HelpLink" Value="" Type="Hyperlink" />
+            <Value Key="Information" Value="" Type="String" />
+            <Value Key="InputType" Value="empty-default" Type="String" />
+            <Value Key="Name" Value="Advanced" Type="String" />
+            <Value Key="Notes" Value="" Type="String" />
+            <Value Key="Placeholder" Value="" Type="String" />
+            <Value Key="Required" Value="False" Type="Boolean" />
+            <Value Key="Tooltip" Value="" Type="String" />
+            <Value Key="ValidationRegExJavaScript" Value="" Type="String" />
+            <Value Key="VisibleInEditUI" Value="True" Type="Boolean" />
+          </Entity>
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@empty-default" AttributeSetName="@empty-default" EntityGUID="51534e5f-5f1c-41d1-b3d0-f5f00ce61582" Json="True" KeyNumber="5789">
+            <Value Key="DefaultCollapsed" Value="True" Type="Boolean" />
+          </Entity>
+        </Attribute>
+        <Attribute StaticName="TutorialId" Type="String" IsTitle="false">
+          <Entity TargetType="2" AssignmentObjectType="EAV Field Properties" AttributeSetStaticName="@All" AttributeSetName="@All" EntityGUID="68d7fd93-e28a-49ae-a6c6-0cb3d9379aad" Json="True" KeyNumber="5790">
+            <Value Key="InputType" Value="string-default" Type="String" />
+            <Value Key="Name" Value="TutorialId" Type="String" />
+            <Value Key="VisibleInEditUI" Value="True" Type="Boolean" />
+          </Entity>
+        </Attribute>
       </Attributes>
     </AttributeSet>
   </AttributeSets>
@@ -369,8 +425,8 @@
       <Value Key="ListContentTypeStaticName" Value="" Type="String" />
       <Value Key="ListPresentationTypeStaticName" Value="" Type="String" />
       <Value Key="Location" Value="Site" Type="String" />
-      <Value Key="Name" Value="Main" Type="String" />
-      <Value Key="Path" Value="live/_Main.cshtml" Type="String" />
+      <Value Key="Name" Value="_Main Tutorial" Type="String" />
+      <Value Key="Path" Value="live/_Main-Tutorial.cshtml" Type="String" />
       <Value Key="PresentationTypeStaticName" Value="" Type="String" />
       <Value Key="PublishData" Value="False" Type="Boolean" />
       <Value Key="SearchIndexingDisabled" Value="False" Type="Boolean" />
@@ -391,27 +447,6 @@
       <Value Key="ListInstructions" Value="" Type="String" />
       <Value Key="Notes" Value="" Type="String" />
     </Entity>
-    <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="2SexyContent-Template" AttributeSetName="2SexyContent-Template" EntityGUID="563e25ab-dd28-4b72-b841-e4240a4b9799" Json="True">
-      <Value Key="ContentTypeStaticName" Value="" Type="String" />
-      <Value Key="Icon" Value="" Type="Hyperlink" />
-      <Value Key="Identifier" Value="" Type="String" />
-      <Value Key="IsHidden" Value="False" Type="Boolean" />
-      <Value Key="ListContentTypeStaticName" Value="" Type="String" />
-      <Value Key="ListPresentationTypeStaticName" Value="" Type="String" />
-      <Value Key="Location" Value="Site" Type="String" />
-      <Value Key="Name" Value="Document" Type="String" />
-      <Value Key="Path" Value="live/_Document.cshtml" Type="String" />
-      <Value Key="Pipeline" Value="fd34159c-c7b5-4d1b-9824-92467584be61" Type="Entity" />
-      <Value Key="PresentationTypeStaticName" Value="" Type="String" />
-      <Value Key="PublishData" Value="False" Type="Boolean" />
-      <Value Key="SearchIndexingDisabled" Value="False" Type="Boolean" />
-      <Value Key="SearchIndexingStreams" Value="" Type="String" />
-      <Value Key="StreamsToPublish" Value="" Type="String" />
-      <Value Key="Type" Value="C# Razor" Type="String" />
-      <Value Key="UseForList" Value="False" Type="Boolean" />
-      <Value Key="ViewController" Value="" Type="String" />
-      <Value Key="ViewNameInUrl" Value="document/.*" Type="String" />
-    </Entity>
     <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="2SexyContent-Template" AttributeSetName="2SexyContent-Template" EntityGUID="2aed4b80-e0ba-4c8c-8aad-4d1d7800d99e" Json="True">
       <Value Key="ContentTypeStaticName" Value="" Type="String" />
       <Value Key="Icon" Value="" Type="Hyperlink" />
@@ -420,8 +455,8 @@
       <Value Key="ListContentTypeStaticName" Value="" Type="String" />
       <Value Key="ListPresentationTypeStaticName" Value="" Type="String" />
       <Value Key="Location" Value="Site" Type="String" />
-      <Value Key="Name" Value="TokenDataDocument" Type="String" />
-      <Value Key="Path" Value="live/_TokenDataDocument.cshtml" Type="String" />
+      <Value Key="Name" Value="Generator: TokenDataDocument" Type="String" />
+      <Value Key="Path" Value="live/_Generator-TokenDataDocument.cshtml" Type="String" />
       <Value Key="Pipeline" Value="9a37c9c5-50a5-4463-86ab-dca4d6167944" Type="Entity" />
       <Value Key="PresentationTypeStaticName" Value="" Type="String" />
       <Value Key="PublishData" Value="False" Type="Boolean" />
@@ -436,11 +471,12 @@
     <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="DataPipeline" AttributeSetName="DataPipeline" EntityGUID="9a37c9c5-50a5-4463-86ab-dca4d6167944" Json="True">
       <Value Key="AllowEdit" Value="True" Type="Boolean" />
       <Value Key="Description" Value="" Type="String" />
+      <Value Key="HiddenInQueryPicker" Value="False" Type="Boolean" />
       <Value Key="Name" Value="TokenDataDocument" Type="String" />
       <Value Key="Params" Value="TokenDataId=[QueryString:Id]" Type="String" />
       <Value Key="StreamsOut" Value="Default,Header" Type="String" />
       <Value Key="StreamWiring" Value="40015ca3-93f9-4af9-853a-97e14d9db17e:TokenData&gt;f903b522-906f-465e-b4e6-a22afe951f42:Default&#xD;&#xA;f903b522-906f-465e-b4e6-a22afe951f42:Default&gt;Out:Default" Type="String" />
-      <Value Key="TestParameters" Value="[Params:TokenDataId]=1" Type="String" />
+      <Value Key="TestParameters" Value="[Params:TokenDataId]=26319" Type="String" />
       <Value Key="VisualDesignerData" Value="" Type="String" />
     </Entity>
     <Entity TargetType="4" AssignmentObjectType="Entity" AttributeSetStaticName="DataPipelinePart" AttributeSetName="DataPipelinePart" EntityGUID="40015ca3-93f9-4af9-853a-97e14d9db17e" Json="True" KeyGuid="9a37c9c5-50a5-4463-86ab-dca4d6167944">
@@ -508,6 +544,7 @@
       <Value Key="Content" Value="&lt;h1&gt;Donald Knuth&lt;/h1&gt;&#xA;&lt;p&gt;Donald Ervin Knuth is an American computer scientist, mathematician, and professor emeritus at Stanford University. He is the 1974 recipient of the ACM Turing Award, informally considered the Nobel Prize of computer science. Knuth has been called the &quot;father of the analysis of algorithms&quot;.&lt;/p&gt;" Type="String" />
       <Value Key="Layout" Value="569216ce-15ee-460e-b6c1-23df0a75e35b" Type="Entity" />
       <Value Key="Name" Value="About Donald Knuth" Type="String" />
+      <Value Key="TutorialId" Value="about-donald-knuth" Type="String" />
     </Entity>
     <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="7438fc46-a58b-43f8-9069-32ef7909171f" AttributeSetName="PageLayout" EntityGUID="5740592e-f9d3-432c-994d-57b4b81b2efd">
       <Value Key="BackgroundImage" Value="file:6357" Type="Hyperlink" />
@@ -531,6 +568,7 @@
       <Value Key="Name" Value="Volunteer Certificate Max Muster" Type="String" />
       <Value Key="TemplateDocument" Value="52d06f47-3b0e-446a-a5c1-1e92db35fa36" Type="Entity" />
       <Value Key="Tokens" Value="&lt;p&gt;[PersonName]=Max Muster&lt;/p&gt;&#xA;&lt;p&gt;[OrganizationName]=Volunteering International&lt;/p&gt;&#xA;&lt;p&gt;[StartDate]=06.09.2021&lt;/p&gt;&#xA;&lt;p&gt;[EndDate]=01.04.2022&lt;/p&gt;" Type="String" />
+      <Value Key="TutorialId" Value="volunteer-certificate-max-muster" Type="String" />
     </Entity>
     <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="772dfff1-b236-4aa9-8359-5f53c08ff7bf" AttributeSetName="UiFormula" EntityGUID="a81a873c-e52b-41ea-b8aa-98da7178be7e" Json="True">
       <Value Key="Enabled" Value="True" Type="Boolean" />
@@ -580,6 +618,50 @@
       <Value Key="Notes" Value="" Type="String" />
       <Value Key="Target" Value="Field.Settings.Visible" Type="String" />
       <Value Key="Title" Value="Setting Visible" Type="String" />
+    </Entity>
+    <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="2SexyContent-Template" AttributeSetName="2SexyContent-Template" EntityGUID="30c817b8-9e62-43e2-ad7e-caa9a8e8f087" Json="True">
+      <Value Key="ContentTypeStaticName" Value="" Type="String" />
+      <Value Key="Icon" Value="" Type="Hyperlink" />
+      <Value Key="Identifier" Value="" Type="String" />
+      <Value Key="IsHidden" Value="False" Type="Boolean" />
+      <Value Key="ListContentTypeStaticName" Value="" Type="String" />
+      <Value Key="ListPresentationTypeStaticName" Value="" Type="String" />
+      <Value Key="Location" Value="Site" Type="String" />
+      <Value Key="Name" Value="Generator: Document" Type="String" />
+      <Value Key="Path" Value="live/_Generator-Document.cshtml" Type="String" />
+      <Value Key="Pipeline" Value="fd34159c-c7b5-4d1b-9824-92467584be61" Type="Entity" />
+      <Value Key="PresentationTypeStaticName" Value="" Type="String" />
+      <Value Key="PublishData" Value="False" Type="Boolean" />
+      <Value Key="SearchIndexingDisabled" Value="False" Type="Boolean" />
+      <Value Key="SearchIndexingStreams" Value="" Type="String" />
+      <Value Key="StreamsToPublish" Value="" Type="String" />
+      <Value Key="Type" Value="C# Razor" Type="String" />
+      <Value Key="UseForList" Value="False" Type="Boolean" />
+      <Value Key="ViewController" Value="" Type="String" />
+      <Value Key="ViewNameInUrl" Value=" document/.*" Type="String" />
+    </Entity>
+    <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="3937fa17-ef2d-40a7-b089-64164eb10bab" AttributeSetName="2sxcPolymorphismConfiguration" EntityGUID="55228ca2-b1be-4ee4-aeed-e3c960610330" Json="True">
+      <Value Key="Mode" Value="Permissions?IsSuperUser" Type="String" />
+    </Entity>
+    <Entity TargetType="1" AssignmentObjectType="Default" AttributeSetStaticName="2SexyContent-Template" AttributeSetName="2SexyContent-Template" EntityGUID="9e0c6613-a26d-4189-8f17-7618540c184b" Json="True">
+      <Value Key="ContentTypeStaticName" Value="" Type="String" />
+      <Value Key="Icon" Value="" Type="Hyperlink" />
+      <Value Key="Identifier" Value="" Type="String" />
+      <Value Key="IsHidden" Value="False" Type="Boolean" />
+      <Value Key="ListContentTypeStaticName" Value="" Type="String" />
+      <Value Key="ListPresentationTypeStaticName" Value="" Type="String" />
+      <Value Key="Location" Value="Site" Type="String" />
+      <Value Key="Name" Value="Generator: Main Tutorial" Type="String" />
+      <Value Key="Path" Value="live/_Generator-Tutorial-View.cshtml" Type="String" />
+      <Value Key="PresentationTypeStaticName" Value="" Type="String" />
+      <Value Key="PublishData" Value="False" Type="Boolean" />
+      <Value Key="SearchIndexingDisabled" Value="False" Type="Boolean" />
+      <Value Key="SearchIndexingStreams" Value="" Type="String" />
+      <Value Key="StreamsToPublish" Value="" Type="String" />
+      <Value Key="Type" Value="C# Razor" Type="String" />
+      <Value Key="UseForList" Value="False" Type="Boolean" />
+      <Value Key="ViewController" Value="" Type="String" />
+      <Value Key="ViewNameInUrl" Value="" Type="String" />
     </Entity>
   </Entities>
   <PortalFiles>
