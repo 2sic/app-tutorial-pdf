@@ -32,3 +32,5 @@ You will find the tutorial in the "Main Tutorial" view after downloading and ins
   * Created Layouts
   * Added Missing Binary warning 
   * Added Examples
+* v1.01 2023-06
+  * Fixed puppeteer dll verification in tutorial
