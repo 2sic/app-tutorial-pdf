@@ -1,0 +1,9 @@
+@inherits Custom.Hybrid.Razor14
+@* This inherits statement gets you features like App, CmsContext, Data etc. - you can delete this comment *@
+@using ToSic.Sxc.Services; @* Make it easier to use https://r.2sxc.org/services *@
+
+<script>
+  document.body.classList.add("is-print-view")
+</script>
+
+<link rel="stylesheet" href="@App.Path/dist/print.min.css" data-enableoptimizations="true">
